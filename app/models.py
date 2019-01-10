@@ -8,14 +8,6 @@
 from django.db import models
 
 
-class Emissivity(models.Model):
-    reading = models.ForeignKey('TblReading', models.DO_NOTHING)
-    value = models.FloatField()
-
-    class Meta:
-        managed = False
-        db_table = 'tbl_emissivity'
-
 
 class Reading(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -29,10 +21,21 @@ class Reading(models.Model):
     class Meta:
         managed = False
         db_table = 'tbl_reading'
+    # end of Meta
+# end of Reading class
 
+class Emissivity(models.Model):
+    reading = models.ForeignKey(Reading, models.DO_NOTHING)
+    value = models.FloatField()
+
+    class Meta:
+        managed = False
+        db_table = 'tbl_emissivity'
+    # end of Meta
+# end of Emissivity class
 
 class Temperature(models.Model):
-    reading = models.ForeignKey(TblReading, models.DO_NOTHING)
+    reading = models.ForeignKey(Reading, models.DO_NOTHING)
     kelvin = models.FloatField()
     celcius = models.FloatField(blank=True, null=True)
     fahrenheit = models.FloatField(blank=True, null=True)
@@ -40,3 +43,5 @@ class Temperature(models.Model):
     class Meta:
         managed = False
         db_table = 'tbl_temperature'
+    # end of Meta
+# end of Temperature class

@@ -25,7 +25,7 @@ SECRET_KEY = 'j)xg68zq!)f$dn-q_5cq=_5#l(h8r&(+u*$gxf4vqj4ka@z=(&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['blackpearl.panici.home', 'neechsoft.com']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app',
 ]
 
 MIDDLEWARE = [
