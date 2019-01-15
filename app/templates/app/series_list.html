@@ -1,1 +1,21 @@
-
+<div>
+    <h3>{{ title }}</h3>
+    {% if series %}
+        <table>
+            <tr>
+                <th>time</th>
+                <th>readings</th>
+                <th>duration</th>
+            </tr>
+            {% for s in series %}
+                <tr>
+                    <td>{{ s.time }}</td>
+                    <td>{{ s.reading_count }}</td>
+                    <td>{{ s.time }}</td>
+                </tr>        
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>no series data to display</p>
+    {% endif %}
+</div>
