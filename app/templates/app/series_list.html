@@ -6,12 +6,16 @@
                 <th>time</th>
                 <th>readings</th>
                 <th>duration</th>
+                <th>max read time</th>
+                <th>max object temp</th>
             </tr>
             {% for s in series %}
                 <tr>
                     <td>{{ s.time }}</td>
                     <td>{{ s.reading_count }}</td>
                     <td>{{ s.time }}</td>
+                    <td>{{ s.max_ttr }}</td>
+                    <td>{{ s.max_object_temp }}</td>
                 </tr>        
             {% endfor %}
         </table>

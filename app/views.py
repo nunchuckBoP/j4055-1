@@ -4,7 +4,7 @@ from app.models import Series
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-
+# have fun.
 class SeriesView(LoginRequiredMixin, ListView):
     model = Series
     title = "Series List"
@@ -17,6 +17,9 @@ class SeriesView(LoginRequiredMixin, ListView):
 
         # get the series model objects
         context['series'] = Series.objects.all().order_by('-id')
+
+        # return the context object
+        return context
 
     # end get_context_data
 # end class
@@ -36,5 +39,8 @@ class ReadingView(LoginRequiredMixin, ListView):
 
         # get the reading model objects
         context['reading'] = Series.objects.all()
+
+        # return the context object
+        return context
     # end get_context_data
 # end class
