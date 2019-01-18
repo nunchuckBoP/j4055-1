@@ -32,9 +32,11 @@ class ReadingView(LoginRequiredMixin, ListView):
     template_name = "reading_index.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        _series = context['object']
 
         # get the reading objects for the series
-        reading_objects = Reading.objects.filter(id=?)
+        reading_objects = Reading.objects.filter(series=_series)
 
         # set the title of the page
         context['title'] = self.title
