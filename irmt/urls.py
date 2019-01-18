@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http.response import HttpResponseRedirect
 
 urlpatterns = [
     path(r'^admin/', admin.site.urls),
-    path(r'^series/', include('app.urls'))
+    path(r'^series/', include('app.urls')),
+    path(r'^$', lambda r: HttpResponseRedirect('series/')),
 ]
