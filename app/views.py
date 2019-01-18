@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from app.models import Series
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 # have fun.
 class SeriesView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
     model = Series
     title = "Series List"
     template_name = "series_index.html"
