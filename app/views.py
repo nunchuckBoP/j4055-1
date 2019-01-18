@@ -27,6 +27,7 @@ class SeriesView(LoginRequiredMixin, ListView):
 # end class
 
 class ReadingView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
     model = Reading
     title = "Reading List"
     template_name = "reading_index.html"
