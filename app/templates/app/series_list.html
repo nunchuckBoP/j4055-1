@@ -1,25 +1,33 @@
-<div>
-    <h3>{{ title }}</h3>
-    {% if series %}
-        <table>
-            <tr>
-                <th>time</th>
-                <th>readings</th>
-                <th>duration</th>
-                <th>max read time</th>
-                <th>max object temp</th>
-            </tr>
-            {% for s in series %}
-                <tr>
-                    <td>{{ s.time }}</td>
-                    <td>{{ s.reading_count }}</td>
-                    <td>{{ s.time }}</td>
-                    <td>{{ s.max_ttr }}</td>
-                    <td>{{ s.max_object_temp }}</td>
-                </tr>        
-            {% endfor %}
-        </table>
-    {% else %}
-        <p>no series data to display</p>
-    {% endif %}
-</div>
+{% extends 'app/base.html' %}
+{% block headline %} Series {% endblock headline %}
+{% block content %}
+    <div>
+        <h3>{{ title }}</h3>
+        {% if series %}
+            <table class='table table-striped'>
+                <thead>
+                    <tr>
+                        <th>time</th>
+                        <th>readings</th>
+                        <th>duration</th>
+                        <th>max read time</th>
+                        <th>max object temp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in series %}
+                        <tr>
+                            <td><a href="/reading/{{ s.id }}/">{{ s.time }}</a></td>
+                            <td>{{ s.reading_count }}</td>
+                            <td>{{ s.time }}</td>
+                            <td>{{ s.max_ttr }}</td>
+                            <td>{{ s.max_object_temp }}</td>
+                        </tr>        
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>no series data to display</p>
+        {% endif %}
+    </div>
+{% endblock %}
