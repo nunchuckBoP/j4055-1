@@ -1,11 +1,42 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView
-from app.models import Series
+from django.views.generic.base import RedirectView
+from django.views.generic import ListView, FormView
+from app.models import Reading, Series
+from app.forms import LoginForm
+from braces import views
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-# Create your views here.
-# have fun.
+
+class LoginView(FormView, views.AnonymousRequiredMixin):
+    form_class = LoginForm
+    success_url = reverse_lazy('series_list')
+    template_name = 'app/login.html'
+    
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(self.request, user)
+            return super(LoginView, self).form_valid(form)
+        else:
+            return self.form_invalid(form)
+        # end if
+    # end form_valid
+# end LoginView
+
+
+class LogoutView(RedirectView, views.LoginRequiredMixin):
+    url = reverse_lazy('series_list')
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super(LogoutView, self).get(request, *args, **kwargs)
+    # end get
+# end LogoutView
+
+
 class SeriesView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     model = Series

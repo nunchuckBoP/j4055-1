@@ -59,6 +59,7 @@ class Series(models.Model):
                max_ttr = i.ttr
            # end if
        # end for
+       return max_ttr
     # end max_ttr
 
     class Meta:
