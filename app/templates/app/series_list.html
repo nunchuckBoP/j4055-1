@@ -9,8 +9,8 @@
                     <tr>
                         <th>time</th>
                         <th>readings</th>
-                        <th>duration</th>
-                        <th>max read time</th>
+                        <th>duration (ms)</th>
+                        <th>max read time (ms)</th>
                         <th>max object temp</th>
                     </tr>
                 </thead>
@@ -19,9 +19,13 @@
                         <tr>
                             <td><a href="/series/{{ s.id }}/readings/">{{ s.time }}</a></td>
                             <td>{{ s.reading_count }}</td>
-                            <td>{{ s.duration }}</td>
-                            <td>{{ s.max_ttr }}</td>
-                            <td>{{ s.max_object_temp }}</td>
+                            <td>{{ s.duration_ms }}</td>
+                            <td>{{ s.max_ttr_ms }}</td>
+                            {% if s.max_object_temp %}
+                                <td>{{ s.max_object_temp.0.kelvin }}K, {{ s.max_object_temp.0.celcius }}°C, {{ s.max_object_temp.0.fahrenheit }}°F</td>
+                            {% else %}
+                                <td>0.0</td>
+                            {% endif %}
                         </tr>        
                     {% endfor %}
                 </tbody>

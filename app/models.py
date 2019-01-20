@@ -27,6 +27,11 @@ class Series(models.Model):
     # end duration
 
     @property
+    def duration_ms(self):
+        return self.duration*1000
+    # end duration_ms
+
+    @property
     def reading_count(self):
         return Reading.objects.filter(series_id=self.pk).count()
     # end reading_count
@@ -39,15 +44,17 @@ class Series(models.Model):
     def max_object_temp(self):
         reading_data = Reading.objects.filter(series_id=self.id).filter(name='object')
         max_temp = 0.0
+        max_temp_obj = None
         for a_reading in reading_data:
             temp_query = a_reading.temperature
             if temp_query.__len__() > 0:
                 if max_temp < temp_query[0].kelvin:
                     max_temp = temp_query[0].kelvin
+                    max_temp_obj = temp_query
                 # end if
             # end if
         # end for
-        return max_temp
+        return max_temp_obj
     # end max_object_temp
 
     @property
@@ -61,6 +68,11 @@ class Series(models.Model):
        # end for
        return max_ttr
     # end max_ttr
+
+    @property
+    def max_ttr_ms(self):
+        return self.max_ttr * 1000
+    # end max_ttr_ms
 
     class Meta:
         managed = False
