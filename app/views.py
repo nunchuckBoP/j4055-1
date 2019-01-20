@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.views.generic.base import RedirectView
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, View
 from app.models import Reading, Series
 from app.forms import LoginForm
 from braces import views
@@ -29,7 +30,7 @@ class LoginView(FormView, views.AnonymousRequiredMixin):
 
 
 class LogoutView(RedirectView, views.LoginRequiredMixin):
-    url = reverse_lazy('series_list')
+    url = reverse_lazy('login')
     def get(self, request, *args, **kwargs):
         logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
@@ -57,26 +58,20 @@ class SeriesView(LoginRequiredMixin, ListView):
     # end get_context_data
 # end class
 
-class ReadingView(LoginRequiredMixin, ListView):
+class ReadingView(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
-    model = Reading
     title = "Reading List"
-    template_name = "reading_index.html"
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        _series = context['object']
+    template_name = "app/reading_list.html"
 
-        # get the reading objects for the series
-        reading_objects = Reading.objects.filter(series=_series)
+    def get(self, request, pk, *args, **kwargs):
 
-        # set the title of the page
-        context['title'] = self.title
-
-        # get the reading model objects
-        context['reading'] = Series.objects.all()
-
-        # return the context object
-        return context
-    # end get_context_data
+       if request.user.is_authenticated:
+           series = get_object_or_404(Series, pk=pk)
+           readings = Reading.objects.filter(series=series)
+           context = {"reading":readings, "title":self.title}
+           return render(request, self.template_name, context)
+       else:
+           return HttpResponseRedirect(reverse_lazy('login'))
+       # end if
+    # end get
 # end class

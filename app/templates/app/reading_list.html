@@ -1,7 +1,7 @@
 {% extends 'app/base.html' %}
 {% block headline %}Readings{% endblock headline %}
 {% block content %}
-  {% if readings %}
+  {% if reading %}
     <table class='table table-striped'>
       <thead>
         <tr>
@@ -13,17 +13,17 @@
           <th>values</th>
         </tr>
       </thead>
-    {% for r in readings %}
+    {% for r in reading %}
       <tr>
-        <td>{{ r.device_address }}</td>
+        <td>{{ r.device_address_hex }}</td>
         <td>{{ r.location_id }}</td>
-        <td>{{ r.data_address }}</td>
+        <td>{{ r.data_address_hex }}</td>
         <td>{{ r.ttr }}</td>
         <td>{{ r.name }}</td>
         {% if r.type == 'temperature' %}
-          <td>{{ r.temperature.kelvin }}K, {{ r.temperature.celcius }}°C, {{ r.temperature.fahrenheit }}°F</td>
+          <td>{{ r.temperature.0.kelvin }}K, {{ r.temperature.0.celcius }}°C, {{ r.temperature.0.fahrenheit }}°F</td>
         {% elif r.type == 'emissivity' %}
-          <td>{{ r.value }}</td>
+          <td>{{ r.emissivity.0.value }}</td>
         {% else %}
           <td>Unsupported datatype: {{ r.type }}</td>
         {% endif %}

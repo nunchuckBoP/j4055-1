@@ -79,6 +79,16 @@ class Reading(models.Model):
     data_address = models.IntegerField()
 
     @property
+    def device_address_hex(self):
+        return hex(self.device_address)
+    # end of device_address_hex
+
+    @property
+    def data_address_hex(self):
+        return hex(self.data_address)
+    # end of data_address_hex
+
+    @property
     def temperature(self):
         return Temperature.objects.filter(reading=self.pk)
     # end temperature
