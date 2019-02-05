@@ -13,7 +13,8 @@ class Series(models.Model):
 
     @property
     def time(self):
-        return datetime.fromtimestamp(self.id).strftime('%c')
+        #return datetime.fromtimestamp(self.id).strftime('%c')
+        return datetime.fromtimestamp(self.id).strftime('%x %X')
     # end time
 
     @property
